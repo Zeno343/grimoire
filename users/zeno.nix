@@ -10,23 +10,16 @@
           useGlobalPkgs = true;
           useUserPackages = true;
             users.zeno = {
-              imports = [ ../programs/neovim.nix ];
               home = {
                 stateVersion = "23.05";
               };
+              imports = [
+                ../programs/neovim.nix
+                ../programs/kakoune.nix
+              ];
 
               programs = {
                 home-manager.enable = true;
-                kakoune = {
-                  enable = true;
-                  config.hooks = [{
-	            name = "WinSetOption";
-	            option = "filetype=markdown";
-	            commands =
-	              ''add-highlighter window/ regex ^#+\s+([^\n]*) 0:red 1:white,red'';
-	            }];
-                };
-
                 kitty = {
                   enable = true;
                   font = {

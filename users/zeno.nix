@@ -10,6 +10,7 @@
           useGlobalPkgs = true;
           useUserPackages = true;
             users.zeno = {
+              imports = [ ../programs/neovim.nix ];
               home = {
                 stateVersion = "23.05";
               };
@@ -58,26 +59,6 @@
                   profiles.default.settings = {
                     "browser.download.dir" = "/home/zeno/documents/Downloads";
                   };
-                };
-
-                neovim = {
-                  enable = true;
-                  defaultEditor = true;
-                  plugins = with pkgs.vimPlugins; [
-                    nvim-treesitter
-      	            { plugin = iceberg-vim;
-                      config = "colorscheme iceberg";
-      	            }
-	            { plugin = vimwiki;
-                      config = ''
-                        let g:vimwiki_list = [{
-	                \  'path': '~/',
-                        \  'index': 'todo',
-                        \  'syntax': 'markdown',
-                        \  'ext': 'md' }]
-                      '';
-                    }
-                  ];
                 };
 
                 git = {

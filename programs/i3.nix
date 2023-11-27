@@ -1,4 +1,15 @@
-{ ... }: {
+{ pkgs, ... }: let colors = import ../colors/noirblaze.nix; in {
+  programs.i3status = {
+    enable = true;
+    package = pkgs.i3status;
+    general = {
+      colors = true;
+      color_good = colors.green;
+      color_degraded = colors.yellow;
+      color_bad = colors.red;
+    };
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -38,12 +49,23 @@
         "Mod4 + Shift + k" = "move up";
         "Mod4 + Shift + l" = "move right";
       };
+
+      bars = [{
+	statusCommand = "${pkgs.i3status}/bin/i3status";
+        fonts = {
+          names = [ "Hack" ];
+          style = "Bold";
+          size = 15.0;
+        };
+      }];
+
       fonts = {
           names = [ "Hack" ];
           style = "Bold";
           size = 15.0;
       };
-      colors.focused = let colors = import ../colors/noirblaze.nix; in {
+
+      colors.focused = {
           indicator = colors.red;
           border = colors.green;
           text = colors.green;
